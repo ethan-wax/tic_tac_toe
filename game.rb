@@ -10,12 +10,26 @@ class Game
     end
 
     def win?
-        if @game_board.row_win(:x)
+        if @game_board.win_row(:x)
             @x_win = true
             return true
-        elsif @game_board.row_win(:o)
+        elsif @game_board.win_col(:o)
             @o_win = true
             return true
+        elsif @game_board.win_col(0,:x) || @game_board.win_col(1,:x) || @game_board.win_col(2,:x)
+            @x_win = true
+            return true
+        elsif @game_board.win_col(0,:o) || @game_board.win_col(1,:o) || @game_board.win_col(2,:o)
+            @o_win = true
+            return true
+        elsif @game_board.win_diag(:x)
+            @x_win = true
+            return true
+        elsif @game_board.win_diag(:o)
+            @o_win = true
+            return true
+        else
+            return false
         end
     end
 end
