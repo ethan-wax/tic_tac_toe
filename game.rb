@@ -35,9 +35,10 @@ class Game
     end
 
     def play_game
-        until win?()
+        until win?
             @game_board.print_board
             if @p1_turn
+                puts "It is #{player1}'s turn'"
                 puts "Please enter where you would like to mark:"
                 input = gets.chomp
                 while @game_board.get_tile(input) == " "
@@ -45,8 +46,9 @@ class Game
                     input = gets.chomp
                 end
                 @game_board.mark_tile(:x, input)
-                victory() if win?
+                victory if win?
             else
+                puts "It is #{player2}'s turn'"
                 puts "Please enter where you would like to mark:"
                 input = gets.chomp
                 while @game_board.get_tile(input) == " "
@@ -54,8 +56,30 @@ class Game
                     input = gets.chomp
                 end
                 @game_board.mark_tile(:o, input)
-                victory() if win?
+                victory if win?
             end
         end
     end
+
+    def victory
+        if @x_win
+            puts "Congratulations #{@player1}, you win!"
+        elsif @o_win
+            puts "Congratulations #{@player2}, you win!"
+        end
+        puts ""
+        puts "Would you like to play again? (y/n)"
+        input = gets.chomp
+        case input
+        when "y"
+            @game_board = Board.new()
+            @x_win = false
+            @o_win = false
+            @p1_turn = true
+            play_game
+        when "n"
+            puts "Thanks for playing!"
+        else
+            puts "Bruh..."
+        end
 end
