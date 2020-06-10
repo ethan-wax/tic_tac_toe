@@ -78,4 +78,8 @@ class Board
         end
         return result
     end
+
+    def full_board
+        return @top_row.none(" ") && @mid_row.none(" ") && @bot_row.none(" ")
+    end
 end

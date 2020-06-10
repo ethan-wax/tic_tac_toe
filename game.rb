@@ -64,11 +64,24 @@ class Game
     end
 
     def victory
+        @game_board.print_board
         if @x_win
             puts "Congratulations #{@player1}, you win!"
         elsif @o_win
             puts "Congratulations #{@player2}, you win!"
         end
+        play_again
+    end
+
+    def tie
+        if @game_board.full_board && !win?()
+            puts "It's a tie!"
+            play_again
+        end
+    end
+
+
+    def play_again
         puts ""
         puts "Would you like to play again? (y/n)"
         input = gets.chomp
