@@ -1,8 +1,8 @@
 class Board
     def initialize
-        @top_row = Array.new(3)
-        @mid_row = Array.new(3)
-        @bot_row = Array.new(3)
+        @top_row = Array.new(3, " ")
+        @mid_row = Array.new(3, " ")
+        @bot_row = Array.new(3, " ")
     end
 
     def win_row(sym)
@@ -33,7 +33,6 @@ class Board
     end
 
     def mark_tile(sym, coord)
-        assert(coord.class == String && coord.length == 2)
         mark = case sym
         when :x then "x"
         when :o then "o"
@@ -56,5 +55,27 @@ class Board
         when "c"
             mark_row[2] = mark
         end
+    end
+
+    def get_tile(coord)
+        col = coord[0]
+        row = coord[1]
+        case row
+        when "1" 
+            mark_row = @top_row
+        when "2"
+            mark_row = @mid_row
+        when "3"
+            mark_row = @bot_row
+        end
+        case col
+        when "a"
+            result = mark_row[0]
+        when "b"
+            result = mark_row[1]
+        when "c"
+            result = mark_row[2]
+        end
+        return result
     end
 end

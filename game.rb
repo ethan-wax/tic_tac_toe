@@ -7,6 +7,7 @@ class Game
         @game_board = Board.new()
         @x_win = false
         @o_win = false
+        @p1_turn = true
     end
 
     def win?
@@ -30,6 +31,31 @@ class Game
             return true
         else
             return false
+        end
+    end
+
+    def play_game
+        until win?()
+            @game_board.print_board
+            if @p1_turn
+                puts "Please enter where you would like to mark:"
+                input = gets.chomp
+                while @game_board.get_tile(input) == " "
+                    puts "Please enter an unmarked tile:"
+                    input = gets.chomp
+                end
+                @game_board.mark_tile(:x, input)
+                victory() if win?
+            else
+                puts "Please enter where you would like to mark:"
+                input = gets.chomp
+                while @game_board.get_tile(input) == " "
+                    puts "Please enter an unmarked tile:"
+                    input = gets.chomp
+                end
+                @game_board.mark_tile(:o, input)
+                victory() if win?
+            end
         end
     end
 end
