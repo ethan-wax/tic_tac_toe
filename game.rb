@@ -11,22 +11,22 @@ class Game
     end
 
     def win?
-        if @game_board.win_row(:x)
+        if @game_board.win_row("x")
             @x_win = true
             return true
-        elsif @game_board.win_col(:o)
+        elsif @game_board.win_row("o")
             @o_win = true
             return true
-        elsif @game_board.win_col(0,:x) || @game_board.win_col(1,:x) || @game_board.win_col(2,:x)
+        elsif @game_board.win_col(0,"x") || @game_board.win_col(1,"x") || @game_board.win_col(2,"x")
             @x_win = true
             return true
-        elsif @game_board.win_col(0,:o) || @game_board.win_col(1,:o) || @game_board.win_col(2,:o)
+        elsif @game_board.win_col(0,"o") || @game_board.win_col(1,"o") || @game_board.win_col(2,"o")
             @o_win = true
             return true
-        elsif @game_board.win_diag(:x)
+        elsif @game_board.win_diag("x")
             @x_win = true
             return true
-        elsif @game_board.win_diag(:o)
+        elsif @game_board.win_diag("o")
             @o_win = true
             return true
         else
@@ -35,28 +35,30 @@ class Game
     end
 
     def play_game
-        until win?
+        until win?()
             @game_board.print_board
             if @p1_turn
-                puts "It is #{player1}'s turn'"
+                puts "It is #{@player1}'s turn"
                 puts "Please enter where you would like to mark:"
                 input = gets.chomp
-                while @game_board.get_tile(input) == " "
+                while @game_board.get_tile(input) != " "
                     puts "Please enter an unmarked tile:"
                     input = gets.chomp
                 end
                 @game_board.mark_tile(:x, input)
-                victory if win?
+                victory() if win?()
+                @p1_turn = false
             else
-                puts "It is #{player2}'s turn'"
+                puts "It is #{@player2}'s turn"
                 puts "Please enter where you would like to mark:"
                 input = gets.chomp
-                while @game_board.get_tile(input) == " "
+                while @game_board.get_tile(input) != " "
                     puts "Please enter an unmarked tile:"
                     input = gets.chomp
                 end
                 @game_board.mark_tile(:o, input)
-                victory if win?
+                victory() if win?()
+                @p1_turn = true
             end
         end
     end
@@ -82,4 +84,5 @@ class Game
         else
             puts "Bruh..."
         end
+    end
 end

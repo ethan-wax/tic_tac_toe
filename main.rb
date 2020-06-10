@@ -8,3 +8,4 @@ def create_player(player_number, symbol)
 end
 
 game = Game.new(create_player(1, :x), create_player(2, :o))
+game.play_game
